@@ -1,0 +1,8 @@
+#git忽略掉的文件
+__pycache__/
+*.py[cod]
+.idea/
+db.sqlite3
+media/
+staticfiles/
+static/
