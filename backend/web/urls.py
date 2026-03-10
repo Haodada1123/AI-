@@ -9,7 +9,10 @@ from rest_framework_simplejwt.views import (
 from web.views.index import index
 
 urlpatterns = [
+    # /api/token/
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # /api/token/refresh/
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path("",index( ))
+    # /
+    path("", index),  # ✅ 去掉括号！
 ]
