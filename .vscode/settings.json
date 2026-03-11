@@ -1,0 +1,6 @@
+{
+    "python.defaultInterpreterPath": "D:/quark-download/实习/.venv/Scripts/python.exe",
+    "terminal.integrated.env.windows": {
+        "PYTHONUNBUFFERED": "1"
+    }
+}
