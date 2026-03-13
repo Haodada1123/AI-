@@ -4,8 +4,6 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
-# 这个接口是“用浏览器里的 refresh_token 再换一个新的 access_token（和新的 refresh_token）”，
-# 让用户不用重新输账号密码就能继续保持登录。
 class RefreshTokenView(APIView):
     def post(self, request):
         try:
@@ -38,4 +36,3 @@ class RefreshTokenView(APIView):
             return Response({
                 'result': "refresh token过期了"
             }, status=401)  # 必须加401
-

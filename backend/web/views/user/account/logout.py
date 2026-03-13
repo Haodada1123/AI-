@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated # 验证是否登录用的
+from rest_framework.permissions import IsAuthenticated
 
 
 class LogoutView(APIView):

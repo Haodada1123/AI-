@@ -1,7 +1,7 @@
-from django.contrib.auth.models import User # Django 自带的“用户表模型” 这是“系统用户”的数据结构。
-from rest_framework.response import Response # 它会帮你把 Python 的字典 / 列表，自动变成 JSON 发给前端
-from rest_framework.views import APIView #一个接口的模板/父类”
-from rest_framework_simplejwt.tokens import RefreshToken  #“刷新令牌对象”。 “帮你生成/解析 JWT 的工具类”。
+from django.contrib.auth.models import User
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from web.models.user import UserProfile
 
@@ -22,7 +22,7 @@ class RegisterView(APIView):
             user = User.objects.create_user(username=username, password=password)
             user_profile = UserProfile.objects.create(user=user)
             refresh = RefreshToken.for_user(user)
-            response = Response({  #准备要“回给前端”的数据  放在Response 的 JSON 里  放在内存
+            response = Response({
                 'result': 'success',
                 'access': str(refresh.access_token),
                 'user_id': user.id,
@@ -30,7 +30,7 @@ class RegisterView(APIView):
                 'photo': user_profile.photo.url,  # 必须加url！！！
                 'profile': user_profile.profile,
             })
-            response.set_cookie( # 在浏览器 Cookie 里塞一个长期凭证 直接塞进浏览器的 Cookie 里
+            response.set_cookie(
                 key='refresh_token',
                 value=str(refresh),
                 httponly=True,
