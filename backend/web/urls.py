@@ -13,7 +13,7 @@ urlpatterns = [
     path('api/user/account/register/', RegisterView.as_view()),
     path('api/user/account/refresh_token/', RefreshTokenView.as_view()),
     path('api/user/account/get_user_info/', GetUserInfoView.as_view()),
-    path('api/user/profile/upadte', UpdateProfileView.as_view()),
+    path('api/user/profile/update/', UpdateProfileView.as_view()),
     path('', index),
 
     re_path(r'^(?!media/|static/|assets/).*$', index)  #兜底路由 返回到前端页面

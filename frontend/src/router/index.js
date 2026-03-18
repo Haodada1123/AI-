@@ -87,11 +87,13 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach((to, from) => {
+router.beforeEach((to) => {
   const user = useUserStore()
-  if (to.meta.needLogin && user.hasPulledUserInfo && !user.isLogin()) {
+  // 挂载前已在 main 中完成拉取；未登录则禁止进入需登录页（避免无 token 却打开资料页导致 403）
+  if (to.meta.needLogin && !user.isLogin()) {
     return {
-      name: 'user-account-login-index'
+      name: 'user-account-login-index',
+      query: { redirect: to.fullPath },
     }
   }
   return true
