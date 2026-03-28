@@ -2,10 +2,13 @@ from django.utils.timezone import now
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+import logging
 
 from web.models.character import Character
 from web.views.utils.photo import remove_old_photo
 
+
+logger = logging.getLogger(__name__)
 
 class UpdateCharacterView(APIView):
     permission_classes = [IsAuthenticated]
@@ -39,7 +42,8 @@ class UpdateCharacterView(APIView):
             return Response({
                 'result': 'success',
             })
-        except:
-            Response({
+        except Exception as e:
+            logger.error(f"更新角色失败: {str(e)}", exc_info=True)
+            return Response({
                 'result': '系统异常，请稍后重试'
             })

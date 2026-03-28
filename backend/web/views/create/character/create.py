@@ -1,10 +1,15 @@
+from django.utils.timezone import now
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+import logging
 
 from web.models.character import Character
 from web.models.user import UserProfile
+from web.views.utils.photo import remove_old_photo
 
+
+logger = logging.getLogger(__name__)
 
 class CreateCharacterView(APIView):
     permission_classes = [IsAuthenticated]
@@ -37,7 +42,7 @@ class CreateCharacterView(APIView):
                 })
 
             Character.objects.create(
-                author=user.profile,
+                author=user_profile,
                 name=name,
                 profile=profile,
                 photo=photo,
@@ -47,8 +52,7 @@ class CreateCharacterView(APIView):
                 'result': 'success'
             })
 
-        except:
+        except Exception as e:
+            logger.error(f"创建角色失败: {str(e)}", exc_info=True)
             return Response(
                 {'result': '系统异常，请重试'})
-
-
