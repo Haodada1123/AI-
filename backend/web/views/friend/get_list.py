@@ -34,8 +34,8 @@ class GetListFriends(APIView):
                     }
                 })
             return Response({
-                'results': 'success',
-                'freinds': friends,
+                'result': 'success',
+                'friends': friends,
             })
         except:
             return Response({'result': '系统异常，请稍后重试'})

@@ -12,7 +12,8 @@ class UserProfileAdmin(admin.ModelAdmin):
 class CharacterAdmin(admin.ModelAdmin):
     raw_id_fields = ('author',)
 
+@admin.register(Friend)
 class FriendAdmin(admin.ModelAdmin):
-    aw_id_fields = ('me', 'character',)
+    raw_id_fields = ('me', 'character',)
 
 # Register your models here.
