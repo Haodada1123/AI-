@@ -38,7 +38,7 @@ const router = createRouter({
       },
     },
     {
-      path: '/create/character/update/：character_id',
+      path: '/create/character/update/:character_id',
       component: UpdateCharacter,
       name: 'update-character',
       meta: {
