@@ -7,6 +7,8 @@ import streamApi from "@/js/http/streamApi.js";
 const inputRef = useTemplateRef('input-ref')
 const message = ref('') //响应式变量：值变了，页面自动更新。v-model 是双向绑定，把输入框的值和响应式变量绑定在一起，任何一方变化都会同步到另一方。
 const props = defineProps(['friendId'])
+const emit = defineEmits(['pushBackMessage','addToLastMessage'])
+
 
 let isProcessing = false
 
@@ -22,6 +24,9 @@ async function handleSend() {
   if (!content) return
   message.value = ''
 
+  emit('pushBackMessage', {role : 'user', content: content, id: crypto.randomUUID()})
+  emit('pushBackMessage', {role : 'ai', content: '', id : crypto.randomUUID()})
+
   try {
     await streamApi('/api/friend/message/chat/', {
       body: {
@@ -32,7 +37,7 @@ async function handleSend() {
         if (isDone){
           isProcessing = false
         }else if (data.content) {
-          console.log(data.content)
+          emit('addToLastMessage', data.content)
         }
       },
       onerror(err){
