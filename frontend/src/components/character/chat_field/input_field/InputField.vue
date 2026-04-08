@@ -90,7 +90,7 @@ defineExpose({   //在 Vue 3 的 <script setup> 中，所有变量和方法默�
       v-else
       @close="showMic = false"
       @send="handleSend"
-      @send="handleStop"
+      @stop="handleStop"
   />
 </template>
 

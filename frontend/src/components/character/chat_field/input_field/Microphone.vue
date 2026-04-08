@@ -8,6 +8,7 @@ const emit = defineEmits(['close', 'send', 'stop'])
 const isSpeaking = ref(false)
 
 let vadInstance = null;
+let isSending = false;
 
 const startRecording = async () => {
   const baseUrl = "http://localhost:5173/vad/";
@@ -49,18 +50,25 @@ const float32ToInt16 = (float32Array) => {
 };
 
 const sendToBackend = async (arrayBuffer) => {
+  if (isSending) return;
+  isSending = true;
   const blob = new Blob([arrayBuffer], { type: "audio/pcm" })
   const formData = new FormData()
   formData.append("audio", blob, 'voice.pcm')
 
   try {
-    const res = await api.post('/api/friend/message/asr/asr/', formData)
+    const res = await api.post('/api/friend/message/asr/asr/', formData, {
+      timeout: 30000,
+    })
     const data = res.data
+    console.log(data)
     if (data.result === 'success') {
       emit('send', null, data.text)
     }
   } catch (err) {
     console.error(err)
+  } finally {
+    isSending = false;
   }
 };
 
