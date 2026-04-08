@@ -76,6 +76,7 @@ api.interceptors.response.use(
                         user.setAccessToken(res.data.access)
                         onRefreshed(res.data.access)
                     }).catch(error => {
+                        // 刷新失败（未登录时的预期行为），静默处理
                         user.logout()
                         onRefreshFailed(error)
                         reject(error)

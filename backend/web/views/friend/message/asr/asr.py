@@ -14,7 +14,7 @@ class ASRView(APIView):
 
     def post(self, request):
         audio = request.FILES.get('audio')
-        if not audio: 
+        if not audio:
             return Response({
                 'result': '音频不存在'
             })
